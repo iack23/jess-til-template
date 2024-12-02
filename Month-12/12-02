@@ -1,0 +1,98 @@
+옵션 TCP/IP 계층 모델을 설명 Wireshark를 통해 HTTP데이터가 패킷상 어떻게 존재하는지 시연
+
+→ 시연하면서 encapsulate + decapsulate 과정 설명
+
+TCP/IP 4계층 : 
+
+인터넷 통신을 위한 모델
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/aaf3cdae-a284-4833-951b-d3c37794ce4c/fd68a420-6932-4a60-bf20-4e2ce04a5eff/image.png)
+
+OSI 7 계층은 표준 모델 
+
+TCP/IP 4계층은 현실에서 인터넷을 위해 사용하는 모델
+
+1계층) 네트워크 접속 계층 :
+
+- 데이터의 물리적 전송을 담당, 전기 신호를 데이터로 변환
+- 하드웨어 간 물리적 연결을 관리
+- 물리적 주소인 MAC 주소를 통해 장비 간 데이터 전송
+- 프로토콜 : 이더넷
+- 데이터의 단위 : 프레임
+
+2계층) 인터넷 계층
+
+- 네트워크 간의 데이터 전송을 담당 네트워크의 연결성 보장
+- 라우팅 기능을 처리
+- 주소 IP를 통해 전송할 논리적 주소 지정
+- 프로토콜 : IPv4, IPv6
+
+3계층) 전송 계층
+
+- 통신 노드 간의 연결 제어 및 자료 송수신 담당
+- 데이터의 흐름제어와 오류 검출 복구를 처리
+- 전송주소인 Port사용
+- 프로토콜 : TCP, UDP
+- 데이터 단위 : 세그먼트
+
+4계층) 응용 계층 
+
+- 응용 프로그램들이 데이터를 교환하기 위해 사용되는 프로토콜
+- 사용자 응용 프로그램 인터페이스를 담당
+- 프로토콜 : HTTP,FTP, SMTP, DNS, POP3
+- 데이터 단위 : 데이터 , 메시지
+
+캡슐화란? 
+
+![img.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/aaf3cdae-a284-4833-951b-d3c37794ce4c/59588ab8-19f4-4012-9827-61f61a09a812/img.png)
+
+데이터를 전송할 때 사용하는 포장 방법 
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/aaf3cdae-a284-4833-951b-d3c37794ce4c/83ae2fd1-e241-4254-bef5-7f26dd1c4250/image.png)
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/aaf3cdae-a284-4833-951b-d3c37794ce4c/9995de2b-90c6-4d2b-9f95-208fd5e269a8/image.png)
+
+### **캡슐화(encapsulation) 과정**
+
+### **Wireshark에서 확인 가능한 패킷 구조:**
+
+- Ethernet II (네트워크 인터페이스 계층)
+    - Source/Destination MAC Address
+    - Type (IPv4)
+- IPv4 (인터넷 계층)
+    - Source/Destination IP Address
+    - Protocol (TCP: 6)
+- TCP (전송 계층)
+    - Source/Destination Port
+    - Sequence/Acknowledgment Number
+- HTTP (응용 계층)
+    - Method: GET
+    - Host: **`example.com`**
+
+패킷은 HEX값(16진수)으로 이루어진 데이터이며 각 계층의 헤더, 데이터로 이루어져있다
+
+캡슐화
+
+https://blog.naver.com/tmk0429/222294384125
+
+TCP/IP 4계층
+
+[https://velog.io/@itonse/TCPIP-4계층](https://velog.io/@itonse/TCPIP-4%EA%B3%84%EC%B8%B5)
+
+와이어 샤크 분석
+
+https://m.blog.naver.com/ak0402/221545095163
+
+네트워크 패킷분석 총 정리 한번 보고 오는걸 추천한다
+
+https://blog.naver.com/kbm0996/221787158790
+
+한줄 정리 : 
+
+패킷 : 데이터 전송의 단위
+
+캡슐화 : 데이터 전송을 위해 TCP/IP 4계층에 맞는 헤더를 씌운다
+
+역캡슐화 : 패킷을 하위 레이어부터 하나씩 벗겨내어 데이터를 꺼낸다
+
+16진수로 되어있고 이 패킷을 분석하여 무슨 파일인지 유추가 가능하다
